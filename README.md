@@ -80,6 +80,10 @@ Output: `build/Release/moo0-dock.exe` (MSVC) or `build/moo0-dock.exe` (MinGW).
 
 The project has zero external dependencies beyond the Windows SDK.
 
+## Troubleshooting
+
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for help with common issues (Moo0 not detected, fullscreen not hiding, hotkey conflicts, etc.).
+
 ## License
 
 MIT
