@@ -33,6 +33,18 @@ Rebuild with `cmake --build build --config Release` and try again.
 
 ---
 
+### Moo0-dock is running but Moo0 doesn't move
+
+Moo0 System Monitor runs as an elevated (admin) process because it uses a kernel driver for hardware sensor access. Windows UIPI security prevents non-elevated programs from moving elevated windows — the `SetWindowPos` calls silently fail.
+
+Moo0-dock embeds a UAC manifest that requests admin elevation automatically. If you're not seeing a UAC prompt when launching, or if Moo0 isn't responding to the dock:
+
+1. Make sure you're running the Release build (`build/Release/moo0-dock.exe`), not a Debug build that may lack the manifest.
+2. Try right-clicking `moo0-dock.exe` and selecting **Run as administrator** manually.
+3. If that works, the UAC manifest may not be embedded correctly. Rebuild with `cmake -B build && cmake --build build --config Release`.
+
+---
+
 ### Moo0 docks but doesn't hide with the taskbar
 
 Make sure taskbar auto-hide is actually enabled: **Settings > Personalization > Taskbar > Taskbar behaviors > Automatically hide the taskbar**. Moo0-dock only tracks slide animations when auto-hide is on. If auto-hide is off, Moo0 stays visible at all times (which is the correct behavior).
