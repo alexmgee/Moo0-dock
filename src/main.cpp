@@ -361,6 +361,21 @@ static bool isFullscreenAppActive() {
     HWND fg = GetForegroundWindow();
     if (!fg || fg == g_app.hWndHost) return false;
 
+    // Exclude desktop and shell windows — these always cover the full monitor
+    // but are not "fullscreen apps" (Progman = desktop, WorkerW = wallpaper layer)
+    wchar_t className[64];
+    GetClassNameW(fg, className, 64);
+    if (wcscmp(className, L"Progman") == 0 ||
+        wcscmp(className, L"WorkerW") == 0 ||
+        wcscmp(className, L"Shell_TrayWnd") == 0 ||
+        wcscmp(className, L"Shell_SecondaryTrayWnd") == 0) {
+        return false;
+    }
+
+    // Exclude windows with WS_EX_TOOLWINDOW (floating palettes, tooltips, etc.)
+    LONG_PTR exStyle = GetWindowLongPtrW(fg, GWL_EXSTYLE);
+    if (exStyle & WS_EX_TOOLWINDOW) return false;
+
     // Get the monitor that our taskbar is on
     HMONITOR hTaskbarMon = MonitorFromWindow(g_app.hWndTaskbar, MONITOR_DEFAULTTONEAREST);
     HMONITOR hFgMon = MonitorFromWindow(fg, MONITOR_DEFAULTTONEAREST);

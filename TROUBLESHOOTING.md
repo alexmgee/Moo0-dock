@@ -60,6 +60,8 @@ Moo0-dock uses two methods to detect fullscreen apps:
 1. **Polling:** Every 200ms, it checks whether the foreground window covers the entire monitor that the taskbar is on.
 2. **AppBar notifications:** Windows sends `ABN_FULLSCREENAPP` events for true exclusive fullscreen apps.
 
+The polling method excludes desktop and shell windows (`Progman`, `WorkerW`, taskbar) so that an empty desktop isn't mistakenly treated as fullscreen.
+
 This should catch most cases, but it does **not** trigger for:
 
 - Maximized windows (even if they cover the taskbar)
