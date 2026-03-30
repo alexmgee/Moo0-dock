@@ -2,7 +2,7 @@
 
 Docks [Moo0 System Monitor](https://www.moo0.com/software/SystemMonitor/) to the Windows 11 taskbar so it stays put, hides with the taskbar, and disappears during fullscreen apps.
 
-![Windows 11](https://img.shields.io/badge/Windows%2011-0078D4?logo=windows11&logoColor=white)
+![Windows 10/11](https://img.shields.io/badge/Windows%2010%2F11-0078D4?logo=windows&logoColor=white)
 ![C++17](https://img.shields.io/badge/C%2B%2B17-00599C?logo=cplusplus&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
