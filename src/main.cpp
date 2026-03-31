@@ -723,16 +723,23 @@ static LRESULT CALLBACK wndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
     case WM_APPBAR_CB:
         switch ((UINT)wParam) {
         case ABN_FULLSCREENAPP:
-            g_app.fullscreenActive = (BOOL)lParam;
-            if (g_app.fullscreenActive) {
-                g_app.state = STATE_FULLSCREEN;
-                hideMoo0();
-                updateTrayTooltip(L"Hidden (fullscreen)");
+            // ABN_FULLSCREENAPP fires for fullscreen apps on ANY monitor.
+            // Only act on it if the fullscreen app is on our taskbar's monitor.
+            if ((BOOL)lParam) {
+                if (isFullscreenAppActive()) {
+                    g_app.fullscreenActive = true;
+                    g_app.state = STATE_FULLSCREEN;
+                    hideMoo0();
+                    updateTrayTooltip(L"Hidden (fullscreen)");
+                }
             } else {
-                g_app.state = STATE_DOCKED;
-                showMoo0();
-                positionMoo0();
-                updateTrayTooltip(L"Docked");
+                g_app.fullscreenActive = false;
+                if (g_app.state == STATE_FULLSCREEN) {
+                    g_app.state = STATE_DOCKED;
+                    showMoo0();
+                    positionMoo0();
+                    updateTrayTooltip(L"Docked");
+                }
             }
             break;
         case ABN_STATECHANGE:
